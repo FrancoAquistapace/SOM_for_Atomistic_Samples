@@ -9,4 +9,5 @@ Self Organising Map (also known as Kohonen Network) implemented in Python for cl
 This software is written in Python 3.8.8 and uses the following external libraries:
 - NumPy 1.20.1
 - Pandas 1.2.4
+
 (Both packages come with the basic installation of Anaconda)
