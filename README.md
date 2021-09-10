@@ -7,6 +7,7 @@ Self Organising Map (also known as Kohonen Network) implemented in Python for cl
 - N: Number of output neurons of the SOM, this is the number of groups the algorithm will use when classifying the atoms in the sample.
 
 The input file passed to the algorithm must have the LAMMPS dump format, or at least have a line with the following format:
+
 `ITEM: ATOMS id x y z Coordination mass c_peratom `
 
 Check the software report in the repository for more information.
