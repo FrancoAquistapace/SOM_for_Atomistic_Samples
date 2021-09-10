@@ -8,6 +8,7 @@ Created on Tue Sep  7 11:01:47 2021
 
 # Import modules and SOM
 import pandas as pd
+import time
 
 from SOM import *
 
@@ -102,6 +103,9 @@ SIZE = (len(features),GROUPS)
 # Build SOM model
 som = SOM(sigma=SIGMA, eta=ETA, size=SIZE)
 
+# Start timing...
+time1 = time.time()
+
 
 # Train SOM and predict groups
 print('\nTraining SOM...')
@@ -143,6 +147,11 @@ for i in range(new_df.shape[0]):
     new_file.write(formatting % new_line_tuple)
     
 new_file.close()
+
+# Finish timing
+time2 = time.time()
+
 print('Process completed')
+print('Elapsed time: ' + str(round(time2-time1,3)) + ' seconds')
     
 
