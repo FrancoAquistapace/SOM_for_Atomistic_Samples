@@ -6,6 +6,8 @@ Self Organising Map (also known as Kohonen Network) implemented in Python for cl
 - ETA: Maximum value of the _eta_ funtion, which acts as the learning rate of the network.
 - N: Number of output neurons of the SOM, this is the number of groups the algorithm will use when classifying the atoms in the sample.
 
+Check the software report in the repository for more information.
+
 ## Dependencies:
 This software is written in Python 3.8.8 and uses the following external libraries:
 - NumPy 1.20.1
