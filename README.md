@@ -8,7 +8,7 @@ Self Organising Map (also known as Kohonen Network) implemented in Python for cl
 
 The input file must be inside the same folder as the main.py file. Furthermore, the input file passed to the algorithm must have the LAMMPS dump format, or at least have a line with the following format:
 
-`ITEM: ATOMS id x y z Coordination mass c_peratom `
+`ITEM: ATOMS id x y z feature_1 feature_2 ...`
 
 Check the software report in the repository for more information.
 
