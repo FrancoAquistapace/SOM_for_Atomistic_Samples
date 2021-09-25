@@ -5,7 +5,7 @@ Created on Tue Sep  7 11:01:47 2021
 
 @author: francoaquistapace
 
-Copyright [2021] [Franco Aquistapace]
+Copyright 2021 Franco Aquistapace
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
