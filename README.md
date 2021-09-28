@@ -20,6 +20,6 @@ This software is written in Python 3.8.8 and uses the following external librari
 (Both packages come with the basic installation of Anaconda)
 
 ## Updates:
-V2 allows the user to analyse several files sequentally, using a single (previously specified) file for the training process. In this way, it allows to test whether transfer learning is possible or not for different samples. It is maintained in a different repository: https://github.com/rambo1309/SOM_for_Atomistic_Samples_V2/blob/main/README.md
+V2 allows the user to analyse several files sequentally, using a single (previously specified) file for the training process. In this way, it allows to test whether transfer learning is possible or not for different samples. It is maintained in a different repository: https://github.com/rambo1309/SOM_for_Atomistic_Samples_V2
 
 Currently working on giving the user the option to change the learning rate funtion, _eta_, with a few alternatives such as a power-law and an exponential decrease.
