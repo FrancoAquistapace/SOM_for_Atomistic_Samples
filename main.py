@@ -27,6 +27,9 @@ import time
 
 from SOM import *
 
+# Fixed seed for consistent results
+np.random.seed(1982) 
+
 # Open file and extract column names
 path = input('Insert file path: ', )
 print('Reading file...')
@@ -88,7 +91,9 @@ else:
 # Normalize features
 norm_df = df[features].copy()
 for feat in features:
-    norm_df[feat] = norm_df[feat]/norm_df[feat].max()
+    min_value = norm_df[feat].min()
+    max_value = norm_df[feat].max()
+    norm_df[feat] = (norm_df[feat] - min_value)/max_value
     
 # Shuffle for training
 frac = input('Insert fraction of the data to be used for '+\
