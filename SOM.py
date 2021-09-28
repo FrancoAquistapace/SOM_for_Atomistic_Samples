@@ -82,7 +82,7 @@ class SOM(object):
     def update(self,x,t):
         D, d_min = self.find_nodes_and_BMU(x)
         m = self.outputLayerSize
-        H = np.ones((m,m))*h(self.sigma, t, D, d_min)
+        H = np.eye(m,m)*h(self.sigma, t, D, d_min)
         X = x.reshape((self.inputLayerSize,1))*np.ones((self.inputLayerSize,m))
         new_W1 = self.W1 + eta(self.eta,t)*np.matmul((X-self.W1), H)
         self.W1 = new_W1
