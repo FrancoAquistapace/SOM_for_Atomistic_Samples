@@ -20,4 +20,6 @@ This software is written in Python 3.8.8 and uses the following external librari
 (Both packages come with the basic installation of Anaconda)
 
 ## Updates:
-Currently working on allowing the user to analyse several input files without having to re-enter the same parameters for each file. Another feature on the works is the option to change the learning rate funtion, _eta_, with a few alternatives such as a power-law and an exponential decrease.
+V2 allows the user to analyse several files sequentally, using a single (previously specified) file for the training process. In this way, it allows to test whether transfer learning is possible or not for different samples.
+
+Currently working on giving the user the option to change the learning rate funtion, _eta_, with a few alternatives such as a power-law and an exponential decrease.
