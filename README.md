@@ -10,7 +10,7 @@ The input file must be inside the same folder as the main.py file. Furthermore, 
 
 `ITEM: ATOMS id x y z feature_1 feature_2 ...`
 
-Check the software report in the repository for more information.
+Check the software report in the general repository for more information: https://github.com/rambo1309/SOM_for_Atomistic_Samples_GeneralRepo
 
 ## Dependencies:
 This software is written in Python 3.8.8 and uses the following external libraries:
