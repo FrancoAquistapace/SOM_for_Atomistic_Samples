@@ -36,6 +36,18 @@ def Euclidean_dist(x,w_m):
     D = np.sqrt(np.dot(d_vec,d_vec))
     return D
 
+# @params x_list, w_m_list expect lists
+# @out returns eucllidean distance between x_list and w_m_list
+def vect_distances(x_list, w_m_list):
+    # Component wise operations
+    distances_sq = []
+    for n in range(len(x_list)):
+        col = x_list[n]
+        dist_n = col - w_m_list[n]
+        dist_n_sq = dist_n ** 2
+        distances_sq.append(dist_n_sq)
+    return np.sqrt(sum(distances_sq))
+
 # @param sigma_0 expects the max_sigma of the network
 # @param t expects a given iteration step
 # @param D expects the values of the output nodes
@@ -124,14 +136,23 @@ class SOM(object):
                 out_values[i,0] = output
             result = np.hstack((data,out_values))
             return result
+        
+        elif str(type(data)) == '<class \'pandas.core.frame.DataFrame\'>':            
+            # Let's try optimizing using vectorization
+            # We'll start by getting a data column for every output neuron,
+            # containing the distances asociated with it
+            dist_columns = []
+            data_columns = []
+            for col in data.columns.to_list(): # Get columns from data
+                data_columns.append(data[col])
                 
-        elif str(type(data)) == '<class \'pandas.core.frame.DataFrame\'>':
-            n = data.shape[0]
-            new_data = data.to_numpy()
-            out_values = np.zeros((n,1))
-            for i in range(n):
-                output = self.predict_output(new_data[i,:])
-                out_values[i,0] = output
-            np_result = np.hstack((new_data,out_values))
-            result = pd.DataFrame(data = np_result)
-            return result    
+            for i in range(self.outputLayerSize): # Iterate over each neuron
+                # Get neuron weights
+                w = self.W1[:,i]
+                dist_columns.append(vect_distances(data_columns,w))
+                
+            # Now that we have the columns, we just have to find the BMU
+            all_distances = pd.concat(dist_columns, axis=1)
+            output = all_distances.idxmin(axis=1)
+            result = pd.concat([data, output], axis=1)
+            return result
