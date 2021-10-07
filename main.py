@@ -93,7 +93,7 @@ norm_df = df[features].copy()
 for feat in features:
     min_value = norm_df[feat].min()
     max_value = norm_df[feat].max()
-    norm_df[feat] = (norm_df[feat] - min_value)/max_value
+    norm_df[feat] = (norm_df[feat] - min_value)/ (max_value - min_value)
     
 # Shuffle for training
 frac = input('Insert fraction of the data to be used for '+\
@@ -142,29 +142,21 @@ new_df = pd.concat([df,groups], axis=1)
 
 # Save new file with the group assigned to each atom
 print('Writing results...')
-new_path = 'SOM_' + path
+new_path = 'SOM_new_' + path
 new_file = open(new_path, 'w')
 
 # Write the header of the file
 for i in range(len(header_lines)):
     line = header_lines[i]
     if i == len(header_lines) - 1:
-        line = line.replace('\n', ' cluster\n')
+        line = line.replace('\n', ' som_cluster\n')
     new_file.write(line)
 
 # Now let's write the new data
-# First we specifiy the format of each line
-formatting = ''
-for i in range(new_df.shape[1]):
-    if i == new_df.shape[1]-1:
-        formatting += '%d\n'
-    else:
-        formatting += '%s '
-# Then we write the lines
-for i in range(new_df.shape[0]):
-    new_line_tuple = tuple(new_df.iloc[i].to_list())
-    # Write new line
-    new_file.write(formatting % new_line_tuple)
+final_string = new_df.to_csv(index=False, sep=' ', 
+                         float_format='%s', header=False)
+new_file.write(final_string)
+
     
 new_file.close()
 
