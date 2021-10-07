@@ -142,7 +142,7 @@ new_df = pd.concat([df,groups], axis=1)
 
 # Save new file with the group assigned to each atom
 print('Writing results...')
-new_path = 'SOM_new_' + path
+new_path = 'SOM_' + path
 new_file = open(new_path, 'w')
 
 # Write the header of the file
