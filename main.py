@@ -130,7 +130,11 @@ time1 = time.time()
 # Train SOM and predict groups
 print('\nTraining SOM...')
 som.train(training_df)
-print('Predicting atom groups...')
+time_training = time.time()
+print('SOM trained succesfully in %.3f seconds' % (time_training - time1))
+
+
+print('\nPredicting atom groups...')
 results = som.predict(norm_df)
 # We only need the last column, which contains the grouping result
 result_cols = results.columns.to_list()
