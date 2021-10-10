@@ -48,6 +48,14 @@ def vect_distances(x_list, w_m_list):
         distances_sq.append(dist_n_sq)
     return np.sqrt(sum(distances_sq))
 
+
+# @param x expects a data vector
+# @param W expects a weight matrix
+def matrix_distance(x,W):
+    X = np.ones(shape=(W.shape[1],W.shape[0]))*x
+    D = np.sqrt(X@x.transpose() - 2*(x@W).transpose() + np.diagonal(W.transpose()@W))
+    return D
+
 # @param sigma_0 expects the max_sigma of the network
 # @param t expects a given iteration step
 # @param D expects the values of the output nodes
@@ -76,10 +84,9 @@ class SOM(object):
         self.W1 = \
                 np.random.rand(self.inputLayerSize, self.outputLayerSize)
                 
-    #This function finds the Best Matching Unit (BMU)
-    # @param x expects the input layer
-    # @param W expects the weight matrix
-    def find_nodes_and_BMU(self,x):
+
+        
+    def old_find_nodes_and_BMU(self,x):
         #Calculate distances
         d = []
         for m in range(self.outputLayerSize):
@@ -88,16 +95,33 @@ class SOM(object):
         m = np.amin(D)
         #Return BMU
         return D, d.index(m)
+
+
+    #This function finds the Best Matching Unit (BMU)
+    # @param x expects the input layer
+    def find_nodes_and_BMU(self,x):
+        # Calculate distances
+        D = matrix_distance(x,self.W1)
+        return D, np.argmin(D)
     
     
     #This function corrects the weights in W1
     def update(self,x,t):
         D, d_min = self.find_nodes_and_BMU(x)
         m = self.outputLayerSize
-        H = np.eye(m,m)*h(self.sigma, t, D, d_min)
+        H = np.eye(m,m)*h(self.sigma, t, D, d_min) 
         X = x.reshape((self.inputLayerSize,1))*np.ones((self.inputLayerSize,m))
         new_W1 = self.W1 + eta(self.eta,t)*np.matmul((X-self.W1), H)
         self.W1 = new_W1
+        
+    def old_update(self,x,t):
+        D, d_min = self.old_find_nodes_and_BMU(x)
+        m = self.outputLayerSize
+        H = np.eye(m,m)*h(self.sigma, t, D, d_min) 
+        X = x.reshape((self.inputLayerSize,1))*np.ones((self.inputLayerSize,m))
+        new_W1 = self.W1 + eta(self.eta,t)*np.matmul((X-self.W1), H)
+        self.W1 = new_W1
+        
         
     def save_weights(self):
         # save this in order to reproduce our cool network
@@ -122,9 +146,14 @@ class SOM(object):
         elif str(type(data)) == '<class \'pandas.core.frame.DataFrame\'>':
             n = data.shape[0]
             new_data = data.to_numpy()
-            for i in range(n):
-                self.update(new_data[i,:],i+1)
+            if self.outputLayerSize <= 2:
+                for i in range(n):
+                    self.old_update(new_data[i,:],i+1)
+            else:
+                for i in range(n):
+                    self.update(new_data[i,:],i+1)
             
+        
         
     def predict(self, data):
         # @param data expects an ndarray or a DataFrame
@@ -136,7 +165,7 @@ class SOM(object):
                 out_values[i,0] = output
             result = np.hstack((data,out_values))
             return result
-        
+                
         elif str(type(data)) == '<class \'pandas.core.frame.DataFrame\'>':            
             # Let's try optimizing using vectorization
             # We'll start by getting a data column for every output neuron,
@@ -155,4 +184,4 @@ class SOM(object):
             all_distances = pd.concat(dist_columns, axis=1)
             output = all_distances.idxmin(axis=1)
             result = pd.concat([data, output], axis=1)
-            return result
+            return result 
