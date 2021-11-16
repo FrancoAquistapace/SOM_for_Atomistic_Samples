@@ -120,8 +120,17 @@ else:
     
 GROUPS = int(input('Insert number of clusters: ',))
 SIZE = (len(features),GROUPS)
-# Build SOM model
-som = SOM(sigma=SIGMA, eta=ETA, size=SIZE)
+
+BATCHED = input('Insert B for batched learning and S for serial learning: ', )
+if BATCHED == 'B':
+    BATCH_SIZE = int(input('Insert batch size: ', ))
+    # Build SOM model
+    som = SOM_Batched(sigma=SIGMA, eta=ETA, size=SIZE, 
+                      batch_size=BATCH_SIZE)
+elif BATCHED == 'S':
+    # Build SOM model
+    som = SOM(sigma=SIGMA, eta=ETA, size=SIZE)
+
 
 # Start timing...
 time1 = time.time()
