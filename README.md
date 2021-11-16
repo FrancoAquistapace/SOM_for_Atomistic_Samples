@@ -5,6 +5,8 @@ Self Organising Map (also known as Kohonen Network) implemented in Python for cl
 - SIGMA: Maximum value of the _sigma_ function, present in the neighbourhood function.
 - ETA: Maximum value of the _eta_ funtion, which acts as the learning rate of the network.
 - N: Number of output neurons of the SOM, this is the number of groups the algorithm will use when classifying the atoms in the sample.
+- Whether to use batched or serial learning for the training process.
+- B: Batch size, in case the training is performed using batched learning.
 
 The input file must be inside the same folder as the main.py file. Furthermore, the input file passed to the algorithm must have the LAMMPS dump format, or at least have a line with the following format:
 
